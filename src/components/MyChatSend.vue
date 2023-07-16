@@ -1,5 +1,21 @@
 <script setup>
+import { ref } from 'vue'
 import { PaperAirplaneIcon, ArrowUpOnSquareStackIcon } from '@heroicons/vue/24/solid'
+import { useChatStore } from '@/stores/chat'
+
+const store = useChatStore()
+
+// 消息内容
+const message = ref('')
+
+// 发送消息
+function send() {
+  if (message.value != '') {
+    console.log(message.value)
+    store.add('user', message.value)
+    message.value = ''
+  }
+}
 </script>
 
 <template>
@@ -15,10 +31,11 @@ import { PaperAirplaneIcon, ArrowUpOnSquareStackIcon } from '@heroicons/vue/24/s
         type="text"
         placeholder="Type here"
         class="grow w-full input input-bordered input-md"
+        v-model="message"
       />
       <!-- 发送按钮 -->
       <div class="btn btn-primary btn-circle">
-        <PaperAirplaneIcon class="w-5 h-5"></PaperAirplaneIcon>
+        <PaperAirplaneIcon class="w-5 h-5" @click="send"></PaperAirplaneIcon>
       </div>
     </div>
     <!-- 底部提示信息 -->
