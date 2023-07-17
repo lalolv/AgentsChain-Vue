@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
-import MyChatItem from './MyChatItem.vue';
+import MyChatItem from './MyChatItem.vue'
 import { useChatStore } from '@/stores/chat'
 
 const store = useChatStore()
@@ -24,13 +24,44 @@ onMounted(() => {
       role: 'system',
       content: '4 Itooo was said that you would, destroy the Sith, not join them.'
     },
+    {
+      role: 'system',
+      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
+    },
+    {
+      role: 'system',
+      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
+    },
+    {
+      role: 'system',
+      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
+    },
+    {
+      role: 'system',
+      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
+    },
+    {
+      role: 'system',
+      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
+    },
+    {
+      role: 'system',
+      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
+    },
+    {
+      role: 'system',
+      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
+    },
+    {
+      role: 'system',
+      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
+    }
   ]
 })
-
 </script>
 
 <template>
-  <div class="flex flex-col-reverse w-3/4 pb-24">
+  <div class="flex flex-col-reverse">
     <template v-for="item in store.conversation">
       <MyChatItem :role="item.role" :content="item.content"></MyChatItem>
     </template>
