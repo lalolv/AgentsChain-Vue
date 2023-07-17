@@ -33,8 +33,8 @@ function send() {
       v-model="message"
     />
     <!-- 发送按钮 -->
-    <div class="btn btn-primary btn-circle">
-      <PaperAirplaneIcon class="w-5 h-5" @click="send"></PaperAirplaneIcon>
+    <div class="btn btn-primary btn-circle" @click="send">
+      <PaperAirplaneIcon class="w-5 h-5"></PaperAirplaneIcon>
     </div>
   </div>
   <!-- 底部提示信息 -->

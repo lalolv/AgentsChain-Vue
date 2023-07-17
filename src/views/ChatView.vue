@@ -21,7 +21,7 @@ store.$subscribe((_, state) => {
 </script>
 
 <template>
-  <div class="flex flex-col h-screen w-3/4">
+  <div class="flex flex-col gap-1 h-screen w-3/4">
     <div ref="chatlist" class="grow overflow-auto">
       <MyChatList></MyChatList>
     </div>
