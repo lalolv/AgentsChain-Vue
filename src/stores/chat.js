@@ -13,5 +13,13 @@ export const useChatStore = defineStore('chat', () => {
     })
   }
 
-  return { conversation, add }
+  // 更新数组最后一个元素
+  function updateLast(reply) {
+    conversation.value[conversation.value.length - 1] = {
+      role: 'bot',
+      content: reply
+    }
+  }
+
+  return { conversation, add, updateLast }
 })

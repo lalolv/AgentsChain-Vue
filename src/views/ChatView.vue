@@ -7,9 +7,7 @@ import { useChatStore } from '@/stores/chat'
 const store = useChatStore()
 const chatlist = ref(null)
 
-onMounted(() => {
-  // chatlist.value.scrollTo(0, 100)
-})
+onMounted(() => {})
 
 // 监听状态的变化
 store.$subscribe((_, state) => {
@@ -17,7 +15,6 @@ store.$subscribe((_, state) => {
     chatlist.value.scrollTo(0, chatlist.value.scrollHeight)
   }
 })
-
 </script>
 
 <template>

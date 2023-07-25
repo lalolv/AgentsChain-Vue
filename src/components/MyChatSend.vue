@@ -7,14 +7,63 @@ const store = useChatStore()
 
 // 消息内容
 const message = ref('')
+// socket
+const socket = ref(null)
+const wssURL = ref('ws://192.168.3.15:8080/hitl')
+// 回复消息内容
+const reply = ref('')
 
 // 发送消息
 function send() {
   if (message.value != '') {
-    console.log(message.value)
+    // TODO 显示加载状态
+
+    // 创建 socket 连接
+    socket.value = new WebSocket(wssURL.value)
+    // 连接成功
+    socket.value.onopen = onOpen
+    // 连接失败
+    socket.value.onerror = (evt) => {
+      console.log('WebSocket connection error:', evt)
+      socket.value = null
+    }
+    // 连接关闭
+    socket.value.onclose = (evt) => {
+      console.log('WebSocket connection closed:', evt)
+      socket.value = null
+      // TODO 恢复加载状态
+      // console.log('reply:', reply.value)
+      store.add('bot', reply.value)
+    }
+    // 监听消息
+    socket.value.onmessage = onMessage
+  }
+}
+
+// 打开 WS 连接
+function onOpen(evt) {
+  console.log('WebSocket connection opened:', evt)
+  // console.log('Message:', message)
+  if (message.value != '') {
+    // send message
+    const msg = {
+      question: message.value
+    }
+    socket.value.send(JSON.stringify(msg))
+    // 添加到状态
     store.add('user', message.value)
+    // 重置为空字符
     message.value = ''
   }
+}
+
+// 监听消息
+// data: {result, error, stout}
+function onMessage(evt) {
+  let data = JSON.parse(evt.data)
+  // console.log('message:', data.result);
+  reply.value += data.result
+  store.updateLast(reply.value)
 }
 </script>
 
