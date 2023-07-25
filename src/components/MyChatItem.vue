@@ -31,7 +31,7 @@ const showAvatar = computed(() => {
       </div>
     </div>
     <!-- 内容 -->
-    <div class="chat-bubble">
+    <div class="chat-bubble" :class="[role == 'user' ? 'chat-bubble-primary' : 'chat-bubble-accent']">
       {{ content }}
     </div>
   </div>
