@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import ChatView from '@/views/ChatView.vue'
+import BotsView from '@/views/BotsView.vue'
 import { useMenuStore } from '@/stores/menu'
 
 const router = createRouter({
@@ -7,12 +7,13 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: "/chat"
+      name: 'bots',
+      component: BotsView
     },
     {
       path: '/chat',
       name: 'chat',
-      component: ChatView
+      component: () => import('../views/ChatView.vue')
     },
     {
       path: '/tools',

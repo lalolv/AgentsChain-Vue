@@ -10,7 +10,7 @@ import MyMenu from '@/components/MyMenu.vue'
       <MyMenu></MyMenu>
     </div>
     <!-- Main -->
-    <div class="grow flex-col bg-slate-50 grid justify-items-center">
+    <div class="grow flex-col bg-slate-50 grid justify-items-center overflow-auto">
       <RouterView />
     </div>
   </div>
