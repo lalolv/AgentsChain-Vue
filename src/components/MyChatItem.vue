@@ -9,6 +9,10 @@ const props = defineProps({
   content: {
     type: String,
     required: true
+  },
+  footer: {
+    type: String,
+    required: false
   }
 })
 
@@ -30,9 +34,20 @@ const showAvatar = computed(() => {
         <img :src="showAvatar" />
       </div>
     </div>
+    <!-- 头部信息 -->
+    <div class="chat-header">
+      Obi-Wan Kenobi
+      <time class="text-xs opacity-50">12:45</time>
+    </div>
     <!-- 内容 -->
     <div class="chat-bubble" :class="[role == 'user' ? 'chat-bubble-primary' : 'chat-bubble-accent']">
-      {{ content }}
+      <article class="prose lg:prose-xl">
+        {{ content }}
+      </article>
+    </div>
+    <!-- 底部信息 -->
+    <div class="chat-footer opacity-50">
+      {{ footer }}
     </div>
   </div>
 </template>

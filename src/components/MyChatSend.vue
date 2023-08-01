@@ -9,7 +9,7 @@ const store = useChatStore()
 const message = ref('')
 // socket
 const socket = ref(null)
-const wssURL = ref('ws://192.168.3.15:8080/hitl')
+const wssURL = ref('ws://127.0.0.1:8080/chat/completion/64c21a57441b03c2db97f04d')
 // 回复消息内容
 const reply = ref('')
 
@@ -33,7 +33,7 @@ function send() {
       socket.value = null
       // TODO 恢复加载状态
       // console.log('reply:', reply.value)
-      store.add('bot', reply.value)
+      // store.add('bot', reply.value)
     }
     // 监听消息
     socket.value.onmessage = onMessage
@@ -54,6 +54,8 @@ function onOpen(evt) {
     store.add('user', message.value)
     // 重置为空字符
     message.value = ''
+    // 添加默认的加载状态
+    store.add('bot', "Thinking...")
   }
 }
 
@@ -61,9 +63,15 @@ function onOpen(evt) {
 // data: {result, error, stout}
 function onMessage(evt) {
   let data = JSON.parse(evt.data)
-  // console.log('message:', data.result);
-  reply.value += data.result
-  store.updateLast(reply.value)
+  console.log('act:', data.action);
+  if (data.action == 'tool_start') {
+    store.updateLast('需要使用工具'+data.outputs)
+  }
+  // reply.value += data.outputs
+  // console.log('reply:', reply.value)
+  if (data.action == 'result') {
+    store.updateLast(data.outputs)
+  }
 }
 </script>
 

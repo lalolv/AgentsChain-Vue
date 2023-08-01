@@ -1,6 +1,7 @@
 <script setup>
 function go_detail() {
   console.log('Detail page')
+  router.push('chat')
 }
 </script>
 
