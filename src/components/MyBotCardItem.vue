@@ -1,7 +1,18 @@
 <script setup>
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const props = defineProps({
+  botInfo: {
+    type: Object,
+    required: true
+  }
+})
+
 function go_detail() {
   console.log('Detail page')
-  router.push('chat')
+  router.push('chat?id='+props.botInfo.id)
 }
 </script>
 
@@ -25,13 +36,11 @@ function go_detail() {
         </div>
         <!-- title -->
         <div class="flex-none truncate block mt-1 text-lg leading-tight font-medium text-black">
-          Incredible accommodation for your team
+          {{ botInfo.name}}
         </div>
         <!-- desc -->
         <p class="flex-none mt-2 line-clamp-3 text-slate-500">
-          Looking to take your team away on a retreat to enjoy awesome food and take in some
-          sunshine? We have a list of places to do just that. sunshine? We have a list of places to
-          do just that.
+          {{ botInfo.desc}}
         </p>
         <div class="grow flex justify-end items-end gap-2">
           <div class="badge badge-sm badge-outline">搜索</div>

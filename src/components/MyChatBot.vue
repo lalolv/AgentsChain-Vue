@@ -1,5 +1,13 @@
 <script setup>
 import { ArrowLeftCircleIcon } from '@heroicons/vue/24/solid'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+// 返回首页
+function backHome() {
+  router.push('/')
+}
 </script>
 
 <template>
@@ -7,7 +15,7 @@ import { ArrowLeftCircleIcon } from '@heroicons/vue/24/solid'
     <!-- avatar 3D -->
     <div class="avatar">
       <!-- 返回按钮 -->
-      <div class="fixed btn btn-xs btn-circle m-2">
+      <div class="fixed btn btn-xs btn-circle m-2" @click="backHome">
         <ArrowLeftCircleIcon></ArrowLeftCircleIcon>
       </div>
       <div class="w-full">
