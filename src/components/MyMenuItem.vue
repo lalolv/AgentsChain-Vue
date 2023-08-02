@@ -19,11 +19,7 @@ onMounted(() => {
 })
 // 设置激活样式
 function setActivateClass(activateName) {
-  if (activateName == props.path) {
-    isActive.value = true
-  } else {
-    isActive.value = false
-  }
+  isActive.value = (activateName == props.path)
 }
 // 选择菜单项
 function selectItem() {

@@ -7,11 +7,15 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      redirect: '/bots'
+    },
+    {
+      path: '/bots',
       name: 'bots',
       component: BotsView
     },
     {
-      path: '/chat',
+      path: '/chat/:id',
       name: 'chat',
       component: () => import('../views/ChatView.vue')
     },

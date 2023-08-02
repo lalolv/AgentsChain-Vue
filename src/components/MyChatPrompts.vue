@@ -1,5 +1,9 @@
 <script setup>
 import MyPromptsItem from './MyPromptsItem.vue'
+
+const props = defineProps({
+  prompts: Array
+})
 </script>
 
 <template>
@@ -29,10 +33,9 @@ import MyPromptsItem from './MyPromptsItem.vue'
     </div>
     <!-- List -->
     <div>
-      <MyPromptsItem></MyPromptsItem>
-      <MyPromptsItem></MyPromptsItem>
-      <MyPromptsItem></MyPromptsItem>
-      <MyPromptsItem></MyPromptsItem>
+      <template v-for="p in prompts">
+        <MyPromptsItem :name="p.name" :desc="p.desc"></MyPromptsItem>
+      </template>
     </div>
   </div>
 </template>

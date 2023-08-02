@@ -15,7 +15,7 @@ import MyMenuItem from './MyMenuItem.vue'
     </div>
     <!-- Menu list -->
     <ul class="grow mt-6">
-      <MyMenuItem path="/" is-active="true" :icon-com="ChatBubbleBottomCenterTextIcon"></MyMenuItem>
+      <MyMenuItem path="bots" is-active="true" :icon-com="ChatBubbleBottomCenterTextIcon"></MyMenuItem>
       <MyMenuItem path="tools" :icon-com="ChartBarIcon"></MyMenuItem>
       <MyMenuItem path="about" :icon-com="WrenchScrewdriverIcon"></MyMenuItem>
     </ul>
