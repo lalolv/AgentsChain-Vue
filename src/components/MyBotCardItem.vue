@@ -10,8 +10,8 @@ const props = defineProps({
   }
 })
 
+// 跳转到聊天界面
 function go_detail() {
-  console.log('Detail page')
   router.push('chat?id='+props.botInfo.id)
 }
 </script>

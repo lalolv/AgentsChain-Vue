@@ -10,60 +10,22 @@ onMounted(() => {
   store.conversation = [
     {
       role: 'user',
-      content: '1 Itooo was said that you would, destroy the Sith, not join them.'
+      content: '1 Itooo was said that you would, destroy the Sith, not join them.',
+      action: 'reply'
     },
     {
       role: 'ai',
-      content: '2 Itooo was said that you would, destroy the Sith, not join them.'
+      content: 'Itooo was said',
+      action: 'reply'
     },
-    {
-      role: 'user',
-      content: '3 Itooo was said that you would, destroy the Sith, not join them.'
-    },
-    {
-      role: 'system',
-      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
-    },
-    {
-      role: 'system',
-      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
-    },
-    {
-      role: 'system',
-      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
-    },
-    {
-      role: 'system',
-      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
-    },
-    {
-      role: 'system',
-      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
-    },
-    {
-      role: 'system',
-      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
-    },
-    {
-      role: 'system',
-      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
-    },
-    {
-      role: 'system',
-      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
-    },
-    {
-      role: 'system',
-      content: '4 Itooo was said that you would, destroy the Sith, not join them.'
-    }
   ]
 })
 </script>
 
 <template>
-  <div class="flex flex-col-reverse">
+  <div class="flex flex-col">
     <template v-for="item in store.conversation">
-      <MyChatItem :role="item.role" :content="item.content"></MyChatItem>
+      <MyChatItem :role="item.role" :content="item.content" :action="item.action"></MyChatItem>
     </template>
   </div>
 </template>
