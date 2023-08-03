@@ -1,7 +1,10 @@
 <script setup>
 import { computed } from 'vue'
+import { MdPreview } from 'md-editor-v3';
+// import 'md-editor-v3/lib/preview.css';
 
 const props = defineProps({
+  chatId: Number,
   role: {
     type: String,
     required: true
@@ -46,7 +49,7 @@ const showAvatar = computed(() => {
     <!-- 内容 -->
     <div class="chat-bubble" :class="[role == 'user' ? 'chat-bubble-primary' : 'chat-bubble-secondary']">
       <article class="prose prose-sm">
-        {{ content }}
+        <MdPreview :editorId="`${role}-${chatId}`" :modelValue="content" />
       </article>
       <span v-if="action === 'loading'" class="loading loading-dots loading-sm"></span>
     </div>

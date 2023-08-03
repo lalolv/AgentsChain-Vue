@@ -15,7 +15,7 @@ onMounted(() => {
     },
     {
       role: 'ai',
-      content: 'Itooo was said',
+      content: '## ksksk \n Itooo was said \n __ksksk__ \n end',
       action: 'reply'
     },
   ]
@@ -24,8 +24,8 @@ onMounted(() => {
 
 <template>
   <div class="flex flex-col">
-    <template v-for="item in store.conversation">
-      <MyChatItem :role="item.role" :content="item.content" :action="item.action"></MyChatItem>
+    <template v-for="(item, index) in store.conversation">
+      <MyChatItem :chat-id="index" :role="item.role" :content="item.content" :action="item.action"></MyChatItem>
     </template>
   </div>
 </template>
