@@ -6,7 +6,7 @@ import { useChatStore } from '@/stores/chat'
 const store = useChatStore()
 
 // 消息内容
-const message = ref('')
+// const message = ref('')
 // socket
 const socket = ref(null)
 const wssURL = ref('ws://192.168.3.15:8080/chat/completion/64c21a57441b03c2db97f04d')
@@ -15,9 +15,7 @@ const wssURL = ref('ws://192.168.3.15:8080/chat/completion/64c21a57441b03c2db97f
 
 // 发送消息
 function send() {
-  if (message.value != '') {
-    // TODO 显示加载状态
-
+  if (store.prompt !== '') {
     // 创建 socket 连接
     socket.value = new WebSocket(wssURL.value)
     // 连接成功
@@ -31,9 +29,6 @@ function send() {
     socket.value.onclose = (evt) => {
       console.log('WebSocket connection closed:', evt)
       socket.value = null
-      // TODO 恢复加载状态
-      // console.log('reply:', reply.value)
-      // store.add('bot', reply.value)
     }
     // 监听消息
     socket.value.onmessage = onMessage
@@ -44,16 +39,16 @@ function send() {
 function onOpen(evt) {
   console.log('WebSocket connection opened:', evt)
   // console.log('Message:', message)
-  if (message.value != '') {
+  if (store.prompt !== '') {
     // send message
     const msg = {
-      question: message.value
+      question: store.prompt
     }
     socket.value.send(JSON.stringify(msg))
     // 添加到状态
-    store.add('user', message.value)
+    store.add('user', store.prompt, 'input')
     // 重置为空字符
-    message.value = ''
+    store.updatePrompt('')
     // 添加默认的加载状态
     store.add('bot', "", 'loading')
   }
@@ -87,7 +82,7 @@ function onMessage(evt) {
       type="text"
       placeholder="Type here"
       class="grow w-full input input-bordered input-md"
-      v-model="message"
+      v-model="store.prompt"
     />
     <!-- 发送按钮 -->
     <div class="btn btn-primary btn-circle" @click="send">
