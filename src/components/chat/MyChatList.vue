@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
-import MyChatItem from '@/components/MyChatItem.vue'
+import MyChatItem from './MyChatItem.vue'
 import { useChatStore } from '@/stores/chat'
 
 const store = useChatStore()
