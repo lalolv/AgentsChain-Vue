@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from 'vue'
-import MyChatItem from './MyChatItem.vue'
+import MyChatItem from '@/components/MyChatItem.vue'
 import { useChatStore } from '@/stores/chat'
 
 const store = useChatStore()
@@ -15,9 +15,9 @@ onMounted(() => {
     },
     {
       role: 'ai',
-      content: '## ksksk \n Itooo was said \n __ksksk__ \n end',
+      content: '## ksksk \n Itooo was said \n ```ksks``` \n end',
       action: 'reply'
-    },
+    }
   ]
 })
 </script>
@@ -25,7 +25,12 @@ onMounted(() => {
 <template>
   <div class="flex flex-col">
     <template v-for="(item, index) in store.conversation">
-      <MyChatItem :chat-id="index" :role="item.role" :content="item.content" :action="item.action"></MyChatItem>
+      <MyChatItem
+        :chat-id="index"
+        :role="item.role"
+        :content="item.content"
+        :action="item.action"
+      ></MyChatItem>
     </template>
   </div>
 </template>

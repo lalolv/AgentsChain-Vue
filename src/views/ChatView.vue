@@ -5,7 +5,7 @@ import MyChatSend from '@/components/MyChatSend.vue'
 import MyChatBot from '@/components/MyChatBot.vue'
 import MyChatPrompts from '@/components/MyChatPrompts.vue'
 import { useChatStore } from '@/stores/chat'
-import { getBotDetail } from '../api/api'
+import { getBotDetail } from '@/api/api'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()

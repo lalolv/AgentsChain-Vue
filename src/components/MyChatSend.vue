@@ -48,9 +48,11 @@ function onOpen(evt) {
     // 添加到状态
     store.add('user', store.prompt, 'input')
     // 重置为空字符
-    store.updatePrompt('')
+    store.resetPrompt()
     // 添加默认的加载状态
-    store.add('bot', "", 'loading')
+    store.add('bot', '', 'loading')
+    // 重置Token
+    store.resetToken()
   }
 }
 
@@ -58,14 +60,20 @@ function onOpen(evt) {
 // data: {result, error, stout}
 function onMessage(evt) {
   let data = JSON.parse(evt.data)
-  console.log('act:', data.action);
-  if (data.action == 'tool_start') {
-    store.updateLast(data.outputs, 'tool')
-  }
+  // console.log('act:', data.action);
+  // if (data.action == 'tool_start') {
+  //   store.updateLast(data.outputs, 'tool')
+  // }
   // reply.value += data.outputs
   // console.log('reply:', reply.value)
   if (data.action == 'result') {
     store.updateLast(data.outputs, 'reply')
+  } else {
+    if (data.action === 'token') {
+      store.updateToken(data.outputs)
+    } else {
+      store.updateToken(data.action + data.outputs + '\n')
+    }
   }
 }
 </script>

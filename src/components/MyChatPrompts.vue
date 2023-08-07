@@ -1,5 +1,5 @@
 <script setup>
-import MyPromptsItem from './MyPromptsItem.vue'
+import MyPromptsItem from '@/components/MyPromptsItem.vue'
 
 const props = defineProps({
   prompts: Array
