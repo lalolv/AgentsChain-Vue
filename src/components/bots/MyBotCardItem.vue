@@ -1,13 +1,19 @@
 <script setup>
 import { useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue';
 
 const router = useRouter()
-
+const quUrl = ref('')
 const props = defineProps({
   botInfo: {
     type: Object,
     required: true
   }
+})
+
+// 初始化
+onMounted(()=>{
+  quUrl.value = import.meta.env.VITE_QN_URL
 })
 
 // 跳转到聊天界面
@@ -25,7 +31,7 @@ function go_detail() {
       <div class="flex-none w-48">
         <img
           class="h-48 w-48 md:h-48 md:w-48 object-cover"
-          :src="`https://qn.appchain.ai/${botInfo.avatar}-avatar_thumb`"
+          :src="`${quUrl}/${botInfo.avatar}-avatar_thumb`"
           alt="Modern building architecture"
         />
       </div>

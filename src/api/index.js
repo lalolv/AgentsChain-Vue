@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 let service = axios.create({
-  baseURL: 'http://192.168.3.15:8080/',
+  baseURL: import.meta.env.VITE_BASE_API,
   timeout: 3000
 })
 

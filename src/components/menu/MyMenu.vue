@@ -1,8 +1,8 @@
 <script setup>
 import {
   ChatBubbleBottomCenterTextIcon,
-  ChartBarIcon,
-  WrenchScrewdriverIcon
+  BoltIcon,
+  StarIcon
 } from '@heroicons/vue/24/solid'
 import MyMenuItem from './MyMenuItem.vue'
 </script>
@@ -16,8 +16,8 @@ import MyMenuItem from './MyMenuItem.vue'
     <!-- Menu list -->
     <ul class="grow mt-6">
       <MyMenuItem path="bots" is-active="true" :icon-com="ChatBubbleBottomCenterTextIcon"></MyMenuItem>
-      <MyMenuItem path="tools" :icon-com="ChartBarIcon"></MyMenuItem>
-      <MyMenuItem path="about" :icon-com="WrenchScrewdriverIcon"></MyMenuItem>
+      <MyMenuItem path="created" :icon-com="BoltIcon"></MyMenuItem>
+      <MyMenuItem path="favorites" :icon-com="StarIcon"></MyMenuItem>
     </ul>
     <!-- Avatar -->
     <div class="flex-none avatar grid justify-center">

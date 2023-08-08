@@ -13,10 +13,12 @@ const props = defineProps({
   }
 })
 const chatTokens = ref(null)
+const qnUrl = ref('')
 const router = useRouter()
 
 // 初始化
 onMounted(() => {
+  qnUrl.value = import.meta.env.VITE_QN_URL
   // 初始化模型消息历史
   store.resetToken()
   // store.updateToken("<h1>ososoospspspspsppspssppsp</h1> \n Action: \n <code>\n{'action': 'Final Answer','action_input':'ksksk'}\n</code> \n kskskk")
@@ -45,7 +47,7 @@ function backHome() {
       </div>
       <!-- 头像 -->
       <div class="w-full">
-        <img :src="`https://qn.appchain.ai/${botInfo.avatar}-avatar_thumb`" />
+        <img :src="`${qnUrl}/${botInfo.avatar}-avatar_thumb`" />
       </div>
       <!-- 工具按钮 -->
       <div class="absolute right-2 top-2 btn btn-xs btn-circle p-0.5">
@@ -69,10 +71,13 @@ function backHome() {
     <div class="divider my-0"></div>
     <!-- real pushed message box from ws -->
     <div ref="chatTokens" class="grow flex flex-wrap gap-2 px-2 overflow-auto">
-      <article class="w-full prose prose-sm whitespace-pre-line break-words">
+      <article v-if="store.tokens !== ''" class="w-full prose prose-sm whitespace-pre-line break-words">
         <!-- <MdPreview :modelValue="store.tokens" /> -->
         {{ store.tokens }}
       </article>
+      <div class="w-full h-full flex justify-center items-center" v-else>
+        暂无执行信息
+      </div>
     </div>
   </div>
 </template>

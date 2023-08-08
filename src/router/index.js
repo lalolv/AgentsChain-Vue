@@ -17,23 +17,23 @@ const router = createRouter({
     {
       path: '/chat/:id',
       name: 'chat',
-      component: () => import('../views/ChatView.vue')
+      component: () => import('@/views/ChatView.vue')
     },
     {
-      path: '/tools',
-      name: 'tools',
+      path: '/created',
+      name: 'created',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/ToolsView.vue')
+      component: () => import('@/views/CreatedView.vue')
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/favorites',
+      name: 'favorites',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
+      component: () => import('@/views/FavoritesView.vue')
     }
   ]
 })
