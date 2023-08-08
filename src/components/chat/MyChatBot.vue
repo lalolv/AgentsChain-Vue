@@ -2,8 +2,7 @@
 import { ArrowLeftIcon } from '@heroicons/vue/24/solid'
 import { WrenchScrewdriverIcon } from '@heroicons/vue/24/solid'
 import { useRouter } from 'vue-router'
-import { MdPreview } from 'md-editor-v3'
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useChatStore } from '@/stores/chat'
 
 const store = useChatStore()
@@ -13,11 +12,22 @@ const props = defineProps({
     required: true
   }
 })
-
+const chatTokens = ref(null)
 const router = useRouter()
 
 // 初始化
-onMounted(() => {})
+onMounted(() => {
+  // 初始化模型消息历史
+  store.resetToken()
+  // store.updateToken("<h1>ososoospspspspsppspssppsp</h1> \n Action: \n <code>\n{'action': 'Final Answer','action_input':'ksksk'}\n</code> \n kskskk")
+})
+
+// 监听状态的变化
+store.$subscribe((_, state) => {
+  if (state.tokens !== '') {
+    chatTokens.value.scrollTo(0, chatTokens.value.scrollHeight)
+  }
+})
 
 // 返回首页
 function backHome() {
@@ -58,9 +68,10 @@ function backHome() {
     </div>
     <div class="divider my-0"></div>
     <!-- real pushed message box from ws -->
-    <div class="grow flex flex-wrap gap-2 px-2 overflow-auto">
-      <article class="w-full prose prose-sm break-words">
-        <MdPreview :modelValue="store.tokens" />
+    <div ref="chatTokens" class="grow flex flex-wrap gap-2 px-2 overflow-auto">
+      <article class="w-full prose prose-sm whitespace-pre-line break-words">
+        <!-- <MdPreview :modelValue="store.tokens" /> -->
+        {{ store.tokens }}
       </article>
     </div>
   </div>

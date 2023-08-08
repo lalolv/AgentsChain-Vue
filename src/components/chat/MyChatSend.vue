@@ -72,7 +72,9 @@ function onMessage(evt) {
     if (data.action === 'token') {
       store.updateToken(data.outputs)
     } else {
-      store.updateToken(data.action + data.outputs + '\n')
+      let act = data.action
+      let out = data.outputs
+      store.updateToken(` \n [${act}] ${out} \n `)
     }
   }
 }
