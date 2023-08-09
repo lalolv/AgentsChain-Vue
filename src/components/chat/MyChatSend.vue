@@ -2,14 +2,16 @@
 import { ref } from 'vue'
 import { PaperAirplaneIcon, ArrowUpOnSquareStackIcon } from '@heroicons/vue/24/solid'
 import { useChatStore } from '@/stores/chat'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const store = useChatStore()
 
 // 消息内容
 // const message = ref('')
 // socket
 const socket = ref(null)
-const wssURL = ref('ws://192.168.3.15:8080/chat/completion/64c21a57441b03c2db97f04d')
+const wssURL = ref(import.meta.env.VITE_WS_API + '/chat/completion/' + route.params.id)
 // 回复消息内容
 // const reply = ref('')
 
