@@ -37,3 +37,8 @@
   display: block;
   /* 修复交汇时出现的白块 */
 }
+
+/* 修改进度条颜色 */
+#nprogress .bar {
+  background: #ef4444 !important;
+}
