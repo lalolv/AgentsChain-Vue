@@ -7,18 +7,18 @@ const store = useChatStore()
 
 // 加载默认的对话
 onMounted(() => {
-  store.conversation = [
-    {
-      role: 'user',
-      content: '1 Itooo was said that you would, destroy the Sith, not join them.',
-      action: 'reply'
-    },
-    {
-      role: 'ai',
-      content: '## ksksk \n Itooo was said \n ```ksks``` \n end',
-      action: 'reply'
-    }
-  ]
+  // store.conversation = [
+  //   {
+  //     role: 'user',
+  //     content: '1 Itooo was said that you would, destroy the Sith, not join them.',
+  //     action: 'reply'
+  //   },
+  //   {
+  //     role: 'ai',
+  //     content: '## ksksk \n Itooo was said \n ```ksks``` \n end',
+  //     action: 'reply'
+  //   }
+  // ]
 })
 </script>
 

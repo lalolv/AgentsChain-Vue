@@ -24,7 +24,7 @@ function go_detail() {
 
 <template>
   <div
-    class="max-w-md mx-auto h-48 bg-white rounded-xl shadow overflow-hidden md:max-w-2xl cursor-pointer transition ease-in-out hover:shadow-xl hover:-translate-y-2"
+    class="max-w-md  h-48 bg-white rounded-xl shadow overflow-hidden md:max-w-2xl cursor-pointer transition ease-in-out hover:shadow-xl hover:-translate-y-2"
     @click="go_detail"
   >
     <div class="md:flex">
@@ -35,7 +35,7 @@ function go_detail() {
           alt="Modern building architecture"
         />
       </div>
-      <div class="flex flex-col p-4">
+      <div class="grow flex flex-col p-4">
         <!-- header -->
         <div class="flex-none tracking-wide text-sm text-indigo-500 font-semibold">
           使用基于 Azure 的 GPT-3.5 大模型 
