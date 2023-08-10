@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import {MyChatList, MyChatSend, MyChatBot, MyChatPrompts} from '@/components/chat'
 import { useChatStore } from '@/stores/chat'
 import { getBotDetail } from '@/api/api'
@@ -16,6 +16,10 @@ onMounted(async () => {
   if (res['status'] == 200) {
     botInfo.value = res["data"]
   }
+})
+
+onUnmounted(async () => {
+  store.conversation = []
 })
 
 // 监听状态的变化
