@@ -7,8 +7,8 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const store = useChatStore()
 
-// 消息内容
-// const message = ref('')
+// 对话状态
+const isLoading = ref(false)
 // socket
 const socket = ref(null)
 const wssURL = ref(import.meta.env.VITE_WS_API + '/chat/completion/' + route.params.id)
@@ -17,7 +17,13 @@ const wssURL = ref(import.meta.env.VITE_WS_API + '/chat/completion/' + route.par
 
 // 发送消息
 function send() {
+  // 判断加载状态
+  // if (isLoading.value) {
+  //   return
+  // }
+  // 发送提示词
   if (store.prompt !== '') {
+    isLoading.value = true
     // 创建 socket 连接
     socket.value = new WebSocket(wssURL.value)
     // 连接成功
@@ -26,11 +32,13 @@ function send() {
     socket.value.onerror = (evt) => {
       console.log('WebSocket connection error:', evt)
       socket.value = null
+      isLoading.value = false
     }
     // 连接关闭
     socket.value.onclose = (evt) => {
       console.log('WebSocket connection closed:', evt)
       socket.value = null
+      isLoading.value = false
     }
     // 监听消息
     socket.value.onmessage = onMessage
@@ -97,8 +105,11 @@ function onMessage(evt) {
       v-model="store.prompt"
     />
     <!-- 发送按钮 -->
-    <div class="btn btn-primary btn-circle" @click="send">
-      <PaperAirplaneIcon class="w-5 h-5"></PaperAirplaneIcon>
+    <div class="btn btn-primary btn-circle swap swap-rotate" 
+      :class="{'swap-active':isLoading}" @click="send">
+      <!-- this hidden checkbox controls the state -->
+      <span class="swap-on loading loading-spinner"></span>
+      <PaperAirplaneIcon class="swap-off"></PaperAirplaneIcon>
     </div>
   </div>
   <!-- 底部提示信息 -->
