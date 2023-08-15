@@ -76,7 +76,7 @@ function onMessage(evt) {
   // }
   // reply.value += data.outputs
   // console.log('reply:', reply.value)
-  if (data.action == 'result') {
+  if (data.action == 'on_agent_finish') {
     store.updateLast(data.outputs, 'reply')
   } else {
     if (data.action === 'token') {

@@ -22,7 +22,7 @@ import MyMenuItem from './MyMenuItem.vue'
     <!-- Avatar -->
     <div class="flex-none avatar grid justify-center">
       <div class="w-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-        <img src="@/assets/avatar.jpg" />
+        <img src="@/assets/avatar.svg" />
       </div>
     </div>
   </div>
