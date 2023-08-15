@@ -31,7 +31,7 @@ export const useChatStore = defineStore('chat', () => {
 
   // Update current prompt
   function updatePrompt(params) {
-    prompt.value += params
+    prompt.value = params
   }
 
   function resetPrompt() {

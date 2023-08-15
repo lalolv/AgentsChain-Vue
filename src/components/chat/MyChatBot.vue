@@ -70,13 +70,13 @@ function backHome() {
     </div>
     <div class="divider my-0"></div>
     <!-- real pushed message box from ws -->
-    <div ref="chatTokens" class="grow flex flex-wrap gap-2 px-2 overflow-auto">
+    <div ref="chatTokens" class="grow flex flex-wrap gap-2 px-2 overflow-auto bg-white">
       <article v-if="store.tokens !== ''" class="w-full prose prose-sm whitespace-pre-line break-words">
         <!-- <MdPreview :modelValue="store.tokens" /> -->
         {{ store.tokens }}
       </article>
       <div class="w-full h-full flex justify-center items-center" v-else>
-        暂无执行信息
+        <img src="@/assets/waiting.jpg" class="opacity-25">
       </div>
     </div>
   </div>
