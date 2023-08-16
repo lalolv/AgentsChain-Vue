@@ -35,7 +35,7 @@ function selectItem() {
   <li class="my-2 grid justify-center">
     <!-- class:active -->
     <a :class="{ active: isActive }" @click="selectItem">
-      <component :is="iconCom" class="h-5 w-5" />
+      <component :is="iconCom" class="h-6 w-6" />
     </a>
   </li>
 </template>

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import {MyChatList, MyChatSend, MyChatBot, MyChatPrompts} from '@/components/chat'
+import {MyChatList, MyChatSend, MyChatBot, MyChatPrompts, MyPromptCard} from '@/components/chat'
 import { useChatStore } from '@/stores/chat'
 import { getBotDetail } from '@/api/api'
 import { useRoute } from 'vue-router'
@@ -43,10 +43,14 @@ store.$subscribe((_, state) => {
         <my-chat-list v-if="store.conversation.length > 0"></my-chat-list>
         <!-- 默认提示 -->
         <div v-else class="grow hero">
-          <div class="hero-content text-center">
+          <div class="w-full hero-content text-center">
             <div class="max-w-md">
-              <h1 class="text-5xl font-bold">AppChain.AI</h1>
-              <p class="py-6">创建自己的 AI 代理，连接 LLM 并访问不同的接口。</p>
+              <h1 class="text-2xl">尝试这些提示词</h1>
+              <div class="my-8 w-full grid grid-cols-2 gap-2">
+                <template v-for="p in botInfo.prompts">
+                  <my-prompt-card :name="p.name" :desc="p.desc"></my-prompt-card>
+                </template>
+              </div>
             </div>
           </div>
         </div>
