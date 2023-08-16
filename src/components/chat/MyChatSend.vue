@@ -93,8 +93,8 @@ function onMessage(evt) {
 <template>
   <!-- 发送消息 -->
   <div class="flex gap-2 items-center">
-    <!-- 历史 -->
-    <div class="btn btn-circle">
+    <!-- 上传文件 -->
+    <div class="btn btn-circle btn-sm">
       <ArrowUpOnSquareStackIcon class="w-5 h-5"></ArrowUpOnSquareStackIcon>
     </div>
     <!-- 消息内容 -->
@@ -105,11 +105,11 @@ function onMessage(evt) {
       v-model="store.prompt"
     />
     <!-- 发送按钮 -->
-    <div class="btn btn-primary btn-circle swap swap-rotate" 
+    <div class="btn btn-ghost btn-circle btn-sm swap swap-rotate" 
       :class="{'swap-active':isLoading}" @click="send">
       <!-- this hidden checkbox controls the state -->
       <span class="swap-on loading loading-spinner"></span>
-      <PaperAirplaneIcon class="swap-off"></PaperAirplaneIcon>
+      <PaperAirplaneIcon class="swap-off w-5 h-5"></PaperAirplaneIcon>
     </div>
   </div>
   <!-- 底部提示信息 -->
