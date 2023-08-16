@@ -29,7 +29,7 @@ function select() {
     <!-- title -->
     <div class="flex items-center gap-2">
       <HashtagIcon class="w-6 h-6" />
-      <div class="font-bold text-base italic line-clamp-1">{{ name }}</div>
+      <div class="font-bold text-base truncate">{{ name }}</div>
     </div>
     <!-- content -->
     <p class="line-clamp-3">
