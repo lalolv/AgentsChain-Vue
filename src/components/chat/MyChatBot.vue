@@ -4,6 +4,7 @@ import { WrenchScrewdriverIcon } from '@heroicons/vue/24/solid'
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import { useChatStore } from '@/stores/chat'
+import MyIotItem from './MyIotItem.vue'
 
 const store = useChatStore()
 const props = defineProps({
@@ -20,8 +21,7 @@ const router = useRouter()
 onMounted(() => {
   qnUrl.value = import.meta.env.VITE_QN_URL
   // 初始化模型消息历史
-  store.resetToken()
-  // store.updateToken("<h1>ososoospspspspsppspssppsp</h1> \n Action: \n <code>\n{'action': 'Final Answer','action_input':'ksksk'}\n</code> \n kskskk")
+  store.chains = []
 })
 
 // 监听状态的变化
@@ -71,10 +71,11 @@ function backHome() {
     <div class="divider my-0"></div>
     <!-- real pushed message box from ws -->
     <div ref="chatTokens" class="grow flex flex-wrap gap-2 px-2 overflow-auto bg-white">
-      <article v-if="store.tokens !== ''" class="w-full prose prose-sm whitespace-pre-line break-words">
-        <!-- <MdPreview :modelValue="store.tokens" /> -->
-        {{ store.tokens }}
-      </article>
+      <div v-if="store.chains.length > 0" class="w-full h-full">
+        <template v-for="item in store.chains">
+          <MyIotItem :action="item.action" :output="item.output"></MyIotItem>
+        </template>
+      </div>
       <div class="w-full h-full flex justify-center items-center" v-else>
         <img src="@/assets/waiting.jpg" class="opacity-25">
       </div>

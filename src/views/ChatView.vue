@@ -20,8 +20,8 @@ onMounted(async () => {
 
 onUnmounted(async () => {
   store.conversation = []
+  store.chains = []
   store.resetPrompt()
-  store.resetToken()
 })
 
 // 监听状态的变化

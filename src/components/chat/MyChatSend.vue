@@ -13,7 +13,8 @@ const isLoading = ref(false)
 const socket = ref(null)
 const wssURL = ref(import.meta.env.VITE_WS_API + '/chat/completion/' + route.params.id)
 // 回复消息内容
-// const reply = ref('')
+const lastAction = ref('')
+const tokens = ref('')
 
 // 发送消息
 function send() {
@@ -61,8 +62,8 @@ function onOpen(evt) {
     store.resetPrompt()
     // 添加默认的加载状态
     store.add('bot', '', 'loading')
-    // 重置Token
-    store.resetToken()
+    // 请空之前的链
+    store.chains = []
   }
 }
 
@@ -77,14 +78,16 @@ function onMessage(evt) {
   // reply.value += data.outputs
   // console.log('reply:', reply.value)
   if (data.action == 'on_agent_finish') {
+    // 更新会话
     store.updateLast(data.outputs, 'reply')
   } else {
     if (data.action === 'token') {
-      store.updateToken(data.outputs)
+      tokens.value += data.outputs
+      store.updateChain(lastAction.value, tokens.value)
     } else {
-      let act = data.action
-      let out = data.outputs
-      store.updateToken(` \n [${act}] ${out} \n `)
+      lastAction.value = data.action
+      tokens.value = ""
+      store.addChain(data.action, data.outputs)
     }
   }
 }
