@@ -6,10 +6,8 @@ export const useChatStore = defineStore('chat', () => {
   const conversation = ref([])
   // 当前输入的prompt
   const prompt = ref('')
-  // AI 输出的 token
-  const tokens = ref('')
-
-  // action：loading reply
+  // 思维链
+  const chains = ref([])
 
   // 添加新的聊天记录
   function add(role, content, action) {
@@ -18,15 +16,6 @@ export const useChatStore = defineStore('chat', () => {
       content: content,
       action: action
     })
-  }
-
-  // Update token
-  function updateToken(params) {
-    tokens.value += params
-  }
-
-  function resetToken() {
-    tokens.value = ''
   }
 
   // Update current prompt
@@ -47,15 +36,31 @@ export const useChatStore = defineStore('chat', () => {
     }
   }
 
+  // 更新思维链
+  function addChain(action, output) {
+    chains.value.push({
+      action: action,
+      output: output
+    })
+  }
+
+  // 更新思维链
+  function updateChain(action, output) {
+    chains.value[chains.value.length - 1] = {
+      action: action,
+      output: output
+    }
+  }
+
   return {
     conversation,
     prompt,
-    tokens,
+    chains,
     add,
     updateLast,
-    updateToken,
-    resetToken,
     updatePrompt,
-    resetPrompt
+    resetPrompt,
+    addChain,
+    updateChain,
   }
 })
