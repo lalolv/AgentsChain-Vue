@@ -6,9 +6,12 @@ import {
 } from '@heroicons/vue/24/solid'
 import { QuestionMarkCircleIcon } from '@heroicons/vue/24/outline'
 import MyMenuItem from './MyMenuItem.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 function help() {
-  console.log('Help!');
+  router.push('/help')
 }
 </script>
 
@@ -28,6 +31,7 @@ function help() {
       <MyMenuItem path="created" :icon-com="BoltIcon"></MyMenuItem>
       <MyMenuItem path="favorites" :icon-com="StarIcon"></MyMenuItem>
     </ul>
+    <!-- Help -->
     <div class="grid justify-center my-4">
       <div class="flex-none btn btn-circle btn-sm bg-transparent" @click="help">
         <QuestionMarkCircleIcon class="w-8 h-8" />
