@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import BotsView from '@/views/BotsView.vue'
+import AgentsView from '@/views/AgentsView.vue'
 import { useMenuStore } from '@/stores/menu'
 // 引入NProgress进度条
 import NProgress from 'nprogress'
@@ -10,12 +10,12 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/bots'
+      redirect: '/agents'
     },
     {
-      path: '/bots',
-      name: 'bots',
-      component: BotsView
+      path: '/agents',
+      name: 'agents',
+      component: AgentsView
     },
     {
       path: '/chat/:id',

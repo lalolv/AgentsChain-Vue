@@ -3,9 +3,9 @@ import { useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue';
 
 const router = useRouter()
-const quUrl = ref('')
+const baseUrl = ref('')
 const props = defineProps({
-  botInfo: {
+  agentInfo: {
     type: Object,
     required: true
   }
@@ -13,12 +13,13 @@ const props = defineProps({
 
 // 初始化
 onMounted(()=>{
-  quUrl.value = import.meta.env.VITE_QN_URL
+  baseUrl.value = import.meta.env.VITE_BASE_API
+  console.log(baseUrl.value);
 })
 
 // 跳转到聊天界面
 function go_detail() {
-  router.push('chat/'+props.botInfo.id)
+  router.push('chat/'+props.agentInfo.id)
 }
 </script>
 
@@ -31,7 +32,7 @@ function go_detail() {
       <div class="flex-none w-48">
         <img
           class="h-48 w-48 md:h-48 md:w-48 object-cover"
-          :src="`${quUrl}/${botInfo.avatar}-avatar_thumb`"
+          :src="`${baseUrl}/agent/${agentInfo.id}/avatar`"
           alt="Modern building architecture"
         />
       </div>
@@ -42,14 +43,14 @@ function go_detail() {
         </div>
         <!-- title -->
         <div class="flex-none truncate block mt-1 text-lg leading-tight font-medium text-black">
-          {{ botInfo.name}}
+          {{ agentInfo.name}}
         </div>
         <!-- desc -->
         <p class="flex-none mt-2 line-clamp-3 text-slate-500">
-          {{ botInfo.desc}}
+          {{ agentInfo.desc}}
         </p>
         <div class="grow flex justify-end items-end gap-2">
-          <template v-for="tool in botInfo.tools">
+          <template v-for="tool in agentInfo.tools">
             <div class="badge badge-sm badge-outline">{{ tool }}</div>
           </template>
         </div>

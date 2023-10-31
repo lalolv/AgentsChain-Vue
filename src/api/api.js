@@ -1,17 +1,17 @@
 import service from '.'
 
-// 机器人列表
-export function getBots() {
+// 智能体列表
+export function getAgents() {
   return service({
     method: 'GET',
-    url: '/bot/list'
+    url: '/agent/list'
   })
 }
 
-// 机器人详情
-export function getBotDetail(botid) {
+// 智能体详情
+export function getAgentDetail(agent_id) {
   return service({
     method: 'GET',
-    url: '/bot/detail/' + botid
+    url: '/agent/detail/' + agent_id
   })
 }
