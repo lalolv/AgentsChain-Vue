@@ -34,7 +34,7 @@ const props = defineProps({
     <!-- List -->
     <div>
       <template v-for="p in prompts">
-        <MyPromptsItem :name="p.name" :desc="p.desc"></MyPromptsItem>
+        <MyPromptsItem :name="p.name" :prompt="p.prompt"></MyPromptsItem>
       </template>
     </div>
   </div>

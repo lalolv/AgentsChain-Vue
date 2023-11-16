@@ -14,7 +14,6 @@ const props = defineProps({
 // 初始化
 onMounted(()=>{
   baseUrl.value = import.meta.env.VITE_BASE_API
-  console.log(baseUrl.value);
 })
 
 // 跳转到聊天界面
