@@ -8,18 +8,18 @@ import MyIotItem from './MyIotItem.vue'
 
 const store = useChatStore()
 const props = defineProps({
-  botInfo: {
+  agentInfo: {
     type: Object,
     required: true
   }
 })
 const chatTokens = ref(null)
-const qnUrl = ref('')
+const baseUrl = ref('')
 const router = useRouter()
 
 // 初始化
 onMounted(() => {
-  qnUrl.value = import.meta.env.VITE_QN_URL
+  baseUrl.value = import.meta.env.VITE_BASE_API
   // 初始化模型消息历史
   store.chains = []
 })
@@ -47,7 +47,7 @@ function backHome() {
       </div>
       <!-- 头像 -->
       <div class="w-full">
-        <img :src="`${qnUrl}/${botInfo.avatar}-avatar_thumb`" />
+        <img v-if="agentInfo.agent_id" :src="`${baseUrl}/agent/${agentInfo.agent_id}/avatar`" />
       </div>
       <!-- 工具按钮 -->
       <div class="absolute right-2 top-2 btn btn-xs btn-circle p-0.5">
@@ -58,14 +58,14 @@ function backHome() {
       </template> -->
       <!-- LLM -->
       <div class="absolute bottom-0 h-5 w-full">
-        <div class="absolute right-1 badge badge-neutral badge-sm">{{ botInfo.llm }}</div>
+        <div class="absolute right-1 badge badge-neutral badge-sm">{{ agentInfo.llm }}</div>
       </div>
     </div>
     <!-- name and desc -->
     <div class="flex-none px-2">
-      <div class="text-lg font-bold text-current text-center">{{ botInfo.name }}</div>
+      <div class="text-lg font-bold text-current text-center">{{ agentInfo.name }}</div>
       <div class="text-sm line-clamp-5 text-center text-slate-500">
-        {{ botInfo.desc }}
+        {{ agentInfo.desc }}
       </div>
     </div>
     <div class="divider my-0"></div>

@@ -80,6 +80,7 @@ function onMessage(evt) {
   if (data.action == 'on_agent_finish') {
     // 更新会话
     store.updateLast(data.outputs, 'reply')
+    socket.value.close();
   } else {
     if (data.action === 'token') {
       tokens.value += data.outputs

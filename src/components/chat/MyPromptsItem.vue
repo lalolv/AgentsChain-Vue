@@ -8,7 +8,7 @@ const props = defineProps({
     type: String,
     required: true
   },
-  desc: {
+  prompt: {
     type: String,
     required: true
   }
@@ -17,7 +17,7 @@ const props = defineProps({
 // Select a prompt
 // uodate store
 function select() {
-  store.updatePrompt(props.desc)
+  store.updatePrompt(props.prompt)
 }
 </script>
 <template>
@@ -27,7 +27,7 @@ function select() {
   >
     <h4 class="line-clamp-1">{{ name }}</h4>
     <p class="line-clamp-3">
-      {{ desc }}
+      {{ prompt }}
     </p>
   </article>
 </template>
