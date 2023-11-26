@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { PaperAirplaneIcon, ArrowUpOnSquareStackIcon } from '@heroicons/vue/24/solid'
 import { useChatStore } from '@/stores/chat'
 import { useRoute } from 'vue-router'
+import axios from 'axios'
 
 const route = useRoute()
 const store = useChatStore()
@@ -15,6 +16,7 @@ const wssURL = ref(import.meta.env.VITE_WS_API + '/chat/completion/' + route.par
 // 回复消息内容
 const lastAction = ref('')
 const tokens = ref('')
+const upfile = ref(null)
 
 // 发送消息
 function send() {
@@ -92,6 +94,29 @@ function onMessage(evt) {
     }
   }
 }
+
+function selectFile() {
+  upfile.value.click();
+}
+
+function selectedFile(evt) {
+  const file = evt.target.files[0];
+  console.log(file.name);
+  uploadFile(file)
+}
+
+function uploadFile(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  try {
+    const response = axios.post('http://127.0.0.1:8080/agent/upload/rag', formData, {
+      headers: {"Content-Type": "multipart/form-data"},
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
+  }
+}
 </script>
 
 <template>
@@ -99,7 +124,8 @@ function onMessage(evt) {
   <div class="flex gap-2 items-center">
     <!-- 上传文件 -->
     <div class="btn btn-circle btn-sm">
-      <ArrowUpOnSquareStackIcon class="w-5 h-5"></ArrowUpOnSquareStackIcon>
+      <input ref="upfile" type="file" accept="*" class="hidden" @change="selectedFile">
+      <ArrowUpOnSquareStackIcon class="w-5 h-5" @click="selectFile"></ArrowUpOnSquareStackIcon>
     </div>
     <!-- 消息内容 -->
     <input
