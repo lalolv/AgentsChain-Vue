@@ -14,7 +14,8 @@ export const useChatStore = defineStore('chat', () => {
     conversation.value.push({
       role: role,
       content: content,
-      action: action
+      action: action,
+      metadata: {}
     })
   }
 
@@ -28,11 +29,12 @@ export const useChatStore = defineStore('chat', () => {
   }
 
   // 更新数组最后一个元素
-  function updateLast(reply, action) {
+  function updateLast(reply, action, metadata) {
     conversation.value[conversation.value.length - 1] = {
       role: 'bot',
       content: reply,
-      action: action
+      action: action,
+      metadata: metadata
     }
   }
 

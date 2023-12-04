@@ -18,6 +18,7 @@ onMounted(async () => {})
         :role="item.role"
         :content="item.content"
         :action="item.action"
+        :metadata="item.metadata"
       ></MyChatItem>
     </template>
   </div>

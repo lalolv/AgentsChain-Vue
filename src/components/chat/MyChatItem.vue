@@ -16,6 +16,10 @@ const props = defineProps({
     type: String,
     required: true
   },
+  metadata: {
+    type: Object,
+    required: false
+  },
   footer: {
     type: String,
     required: false
@@ -36,6 +40,12 @@ const props = defineProps({
       <article class="prose prose-sm">
         <md-preview :editorId="`${role}-${chatId}`" :modelValue="content" />
       </article>
+      <!-- metadata -->
+      <template v-if="metadata != null">
+        <a v-if="metadata.source != null" class="link">{{ metadata.source }}</a>
+        <a v-if="metadata.image != null" class="link">Image</a>
+      </template>
+      <!-- loading -->
       <span v-if="action === 'loading'" class="loading loading-dots loading-sm"></span>
     </div>
     <!-- 底部信息 -->
