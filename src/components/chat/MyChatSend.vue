@@ -92,6 +92,8 @@ function onMessage(evt) {
       tokens.value = ""
       store.addChain(data.action, data.outputs)
     }
+    // 更新中间的加载状态信息
+    store.updateLast(data.action, 'loading', lastMetadata.value)
   }
 }
 

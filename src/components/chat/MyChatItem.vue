@@ -38,15 +38,18 @@ const props = defineProps({
     <!-- 内容 -->
     <div class="chat-bubble" :class="[role == 'user' ? 'chat-bubble-primary' : 'chat-bubble-secondary']">
       <article class="prose prose-sm">
-        <md-preview :editorId="`${role}-${chatId}`" :modelValue="content" />
+        <div class="flex flex-row gap-2">
+          <!-- loading -->
+          <span v-if="action === 'loading'" class="loading loading-spinner loading-xs"></span>
+          <md-preview :editorId="`${role}-${chatId}`" :modelValue="content" />
+        </div>
       </article>
       <!-- metadata -->
       <template v-if="metadata != null">
         <a v-if="metadata.source != null" class="link">{{ metadata.source }}</a>
         <a v-if="metadata.image != null" class="link">Image</a>
       </template>
-      <!-- loading -->
-      <span v-if="action === 'loading'" class="loading loading-dots loading-sm"></span>
+      
     </div>
     <!-- 底部信息 -->
     <div class="chat-footer opacity-50">
