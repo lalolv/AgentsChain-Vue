@@ -1,8 +1,24 @@
-<script setup></script>
+<script setup>
+import { getDocs } from '@/api/widget.js'
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { formatSize } from '@/utils/string.js'
+
+const route = useRoute()
+// 机器人列表
+const docs = ref('')
+
+onMounted(async () => {
+  let res = await getDocs(route.params.id)
+  if (res['status'] == 200) {
+    docs.value = res['data']
+  }
+})
+</script>
 
 <template>
   <div class="flex justify-between mb-4">
-    <h1 class="text-xl font-semibold">Card title!</h1>
+    <h1 class="text-xl font-semibold">文档列表</h1>
     <button class="btn btn-xs btn-circle">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -16,19 +32,13 @@
       </svg>
     </button>
   </div>
-  <div class="my-2">
-    <!-- 文件信息 -->
-    <div class="text-gray-600 line-clamp-1">测试文档1测试文档1测试文档1测试文档1测试文档1测试文档1测试文档1.pdf</div>
-    <div class="text-xs text-gray-400">101029 kb</div>
-  </div>
-  <div class="my-2">
-    <!-- 文件信息 -->
-    <div class="text-gray-600">测试文档2.pdf</div>
-    <div class="text-xs text-gray-400">101029 kb</div>
-  </div>
-  <div class="my-2">
-    <!-- 文件信息 -->
-    <div class="text-gray-600">测试文档3.pdf</div>
-    <div class="text-xs text-slate-400">101029 kb</div>
-  </div>
+  <template v-for="doc in docs">
+    <div class="my-2">
+      <!-- 文件信息 -->
+      <div class="text-gray-600 line-clamp-1">
+        {{ doc.name }}
+      </div>
+      <div class="text-xs text-gray-400"> {{ formatSize(doc.size) }}</div>
+    </div>
+  </template>
 </template>

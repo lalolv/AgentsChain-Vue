@@ -1,6 +1,19 @@
 <script setup>
-import MyPromptsItem from '@/components/chat/MyPromptsItem.vue'
+import MyPromptItem from './MyPromptItem.vue'
+import { getPrompts } from '@/api/widget.js'
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
+// 提示词列表
+const prompts = ref('')
+
+onMounted(async () => {
+  let res = await getPrompts(route.params.id)
+  if (res['status'] == 200) {
+    prompts.value = res['data']
+  }
+})
 </script>
 
 <template>
@@ -9,9 +22,8 @@ import MyPromptsItem from '@/components/chat/MyPromptsItem.vue'
   </div>
   <div class="my-2">
     <!-- 提示词 -->
-    <MyPromptsItem name="Prompt1" prompt="This is a Prompt!"></MyPromptsItem>
-    <MyPromptsItem name="Prompt1" prompt="This is a Prompt!"></MyPromptsItem>
-    <MyPromptsItem name="Prompt1" prompt="This is a Prompt!"></MyPromptsItem>
-    <MyPromptsItem name="Prompt1" prompt="This is a Prompt!"></MyPromptsItem>
+    <template v-for="p in prompts">
+      <MyPromptItem :name="p.name" :prompt="p.prompt"></MyPromptItem>
+    </template>
   </div>
 </template>
