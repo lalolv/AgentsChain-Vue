@@ -9,12 +9,13 @@ export function getDocs(agent_id) {
 }
 
 // 上传文档
-export function upDoc(agent_id, formData) {
+export function upDoc(agent_id, formData, onUpProgress) {
   return service({
     method: 'POST',
     url: `/widget/doc/upload/${agent_id}`,
     headers: { 'Content-Type': 'multipart/form-data' },
-    data: formData
+    data: formData,
+    onUploadProgress: onUpProgress
   })
 }
 
