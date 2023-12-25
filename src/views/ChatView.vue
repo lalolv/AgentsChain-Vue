@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import {MyChatList, MyChatSend, MyChatBot, MyChatPrompts, MyPromptCard} from '@/components/chat'
+import {MyChatList, MyChatSend, MyChatBot, MyWidgets, MyPromptCard} from '@/components/chat'
 import { useChatStore } from '@/stores/chat'
 import { getAgentDetail } from '@/api/api'
 import { useRoute } from 'vue-router'
@@ -61,7 +61,7 @@ store.$subscribe((_, state) => {
         <my-chat-send></my-chat-send>
       </div>
     </div>
-    <!-- 预设提示词 -->
-    <my-chat-prompts class="flex-none w-80 overflow-auto" :prompts="agentInfo.prompts"></my-chat-prompts>
+    <!-- 小组件 -->
+    <my-widgets class="flex-none w-80 bg-slate-100 overflow-auto"></my-widgets>
   </div>
 </template>

@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { PaperAirplaneIcon, ArrowUpOnSquareStackIcon } from '@heroicons/vue/24/solid'
 import { useChatStore } from '@/stores/chat'
 import { useRoute } from 'vue-router'
+import axios from 'axios'
 
 const route = useRoute()
 const store = useChatStore()
@@ -13,8 +14,11 @@ const isLoading = ref(false)
 const socket = ref(null)
 const wssURL = ref(import.meta.env.VITE_WS_API + '/chat/completion/' + route.params.id)
 // 回复消息内容
+const lastContent = ref('')
+const lastMetadata = ref({})
 const lastAction = ref('')
 const tokens = ref('')
+const upfile = ref(null)
 
 // 发送消息
 function send() {
@@ -38,6 +42,8 @@ function send() {
     // 连接关闭
     socket.value.onclose = (evt) => {
       console.log('WebSocket connection closed:', evt)
+      // 更新最后消息内容
+      store.updateLast(lastContent.value, 'reply', lastMetadata.value)
       socket.value = null
       isLoading.value = false
     }
@@ -71,16 +77,12 @@ function onOpen(evt) {
 // data: {result, error, stout}
 function onMessage(evt) {
   let data = JSON.parse(evt.data)
-  // console.log('act:', data.action);
-  // if (data.action == 'tool_start') {
-  //   store.updateLast(data.outputs, 'tool')
-  // }
-  // reply.value += data.outputs
-  // console.log('reply:', reply.value)
   if (data.action == 'on_agent_finish') {
     // 更新会话
-    store.updateLast(data.outputs, 'reply')
-    socket.value.close();
+    lastContent.value = data.outputs
+    // socket.value.close();
+  } else if (data.action == 'metadata') {
+    lastMetadata.value = data.outputs
   } else {
     if (data.action === 'token') {
       tokens.value += data.outputs
@@ -90,6 +92,31 @@ function onMessage(evt) {
       tokens.value = ""
       store.addChain(data.action, data.outputs)
     }
+    // 更新中间的加载状态信息
+    store.updateLast(data.action, 'loading', lastMetadata.value)
+  }
+}
+
+function selectFile() {
+  upfile.value.click();
+}
+
+function selectedFile(evt) {
+  const file = evt.target.files[0];
+  console.log(file.name);
+  uploadFile(file)
+}
+
+function uploadFile(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  try {
+    const response = axios.post('http://127.0.0.1:8080/agent/upload/rag', formData, {
+      headers: {"Content-Type": "multipart/form-data"},
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error(error);
   }
 }
 </script>
@@ -99,7 +126,8 @@ function onMessage(evt) {
   <div class="flex gap-2 items-center">
     <!-- 上传文件 -->
     <div class="btn btn-circle btn-sm">
-      <ArrowUpOnSquareStackIcon class="w-5 h-5"></ArrowUpOnSquareStackIcon>
+      <input ref="upfile" type="file" accept="*" class="hidden" @change="selectedFile">
+      <ArrowUpOnSquareStackIcon class="w-5 h-5" @click="selectFile"></ArrowUpOnSquareStackIcon>
     </div>
     <!-- 消息内容 -->
     <input

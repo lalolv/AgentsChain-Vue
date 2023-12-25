@@ -24,7 +24,7 @@ function help() {
     <!-- Menu list -->
     <ul class="grow flex flex-col justify-center">
       <MyMenuItem
-        path="bots"
+        path="agents"
         is-active="true"
         :icon-com="ChatBubbleBottomCenterTextIcon"
       ></MyMenuItem>
