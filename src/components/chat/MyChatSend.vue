@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { PaperAirplaneIcon, ArrowUpOnSquareStackIcon } from '@heroicons/vue/24/solid'
 import { useChatStore } from '@/stores/chat'
 import { useRoute } from 'vue-router'
@@ -8,55 +8,54 @@ import axios from 'axios'
 const route = useRoute()
 const store = useChatStore()
 
+// 连接状态
+const isConnected = ref(false)
 // 对话状态
 const isLoading = ref(false)
 // socket
 const socket = ref(null)
 const wssURL = ref(import.meta.env.VITE_WS_API + '/chat/completion/' + route.params.id)
 // 回复消息内容
-const lastContent = ref('')
 const lastMetadata = ref({})
 const lastAction = ref('')
 const tokens = ref('')
 const upfile = ref(null)
 
+// 初始化，连接 ws
+onMounted(async () => {
+  // 创建 socket 连接
+  socket.value = new WebSocket(wssURL.value)
+  // 连接成功
+  socket.value.onopen = (evt) => {
+    console.log('WebSocket connection opened:', evt)
+    isConnected.value = true
+  }
+  // 连接失败
+  socket.value.onerror = (evt) => {
+    console.log('WebSocket connection error:', evt)
+    isConnected.value = false
+    socket.value = null
+    isLoading.value = false
+  }
+  // 连接关闭
+  socket.value.onclose = (evt) => {
+    console.log('WebSocket connection closed:', evt)
+    isConnected.value = false
+  }
+  // 监听消息
+  socket.value.onmessage = onMessage
+})
+
+// 初始化，连接 ws
+onUnmounted(async () => {
+  socket.value.close()
+})
+
 // 发送消息
 function send() {
-  // 判断加载状态
-  // if (isLoading.value) {
-  //   return
-  // }
   // 发送提示词
-  if (store.prompt !== '') {
+  if (isConnected.value && !isLoading.value && store.prompt !== '') {
     isLoading.value = true
-    // 创建 socket 连接
-    socket.value = new WebSocket(wssURL.value)
-    // 连接成功
-    socket.value.onopen = onOpen
-    // 连接失败
-    socket.value.onerror = (evt) => {
-      console.log('WebSocket connection error:', evt)
-      socket.value = null
-      isLoading.value = false
-    }
-    // 连接关闭
-    socket.value.onclose = (evt) => {
-      console.log('WebSocket connection closed:', evt)
-      // 更新最后消息内容
-      store.updateLast(lastContent.value, 'reply', lastMetadata.value)
-      socket.value = null
-      isLoading.value = false
-    }
-    // 监听消息
-    socket.value.onmessage = onMessage
-  }
-}
-
-// 打开 WS 连接
-function onOpen(evt) {
-  console.log('WebSocket connection opened:', evt)
-  // console.log('Message:', message)
-  if (store.prompt !== '') {
     // send message
     const msg = {
       question: store.prompt
@@ -78,9 +77,11 @@ function onOpen(evt) {
 function onMessage(evt) {
   let data = JSON.parse(evt.data)
   if (data.action == 'on_agent_finish') {
-    // 更新会话
-    lastContent.value = data.outputs
-    // socket.value.close();
+    console.log('on_agent_finish');
+    // 更新最后消息内容
+    store.updateLast(data.outputs, 'reply', lastMetadata.value)
+    isLoading.value = false
+    lastMetadata.value = {}
   } else if (data.action == 'metadata') {
     lastMetadata.value = data.outputs
   } else {
@@ -93,7 +94,9 @@ function onMessage(evt) {
       store.addChain(data.action, data.outputs)
     }
     // 更新中间的加载状态信息
-    store.updateLast(data.action, 'loading', lastMetadata.value)
+    if (isLoading.value) {
+      store.updateLast(data.action, 'loading', lastMetadata.value)
+    }
   }
 }
 
